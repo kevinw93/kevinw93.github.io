@@ -1,0 +1,243 @@
+/* Libron by Nico Verbruggen, SIL Open Font License 1.1 (see fonts/OFL.txt) */
+@font-face {
+  font-family: "Libron";
+  src: url("fonts/Libron-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Libron";
+  src: url("fonts/Libron-Italic.ttf") format("truetype");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Libron";
+  src: url("fonts/Libron-Bold.ttf") format("truetype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+:root {
+  --bg: #fdfdfc;
+  --fg: #1a1a1a;
+  --muted: #8a8a8a;
+  --accent: #2f5fd0;
+  --border: #e2e2df;
+  --hover: #f1f1ee;
+  --label-w: 7rem;
+}
+
+/* dark theme: set by the toggle (data-theme), or by the system setting if JS is off */
+:root[data-theme="dark"] {
+  --bg: #111;
+  --fg: #e6e6e6;
+  --muted: #777;
+  --accent: #8aa8ff;
+  --border: #2c2c2c;
+  --hover: #1c1c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #111;
+    --fg: #e6e6e6;
+    --muted: #777;
+    --accent: #8aa8ff;
+    --border: #2c2c2c;
+    --hover: #1c1c1c;
+  }
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 17px/1.6 "Libron", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding-left: var(--label-w);
+}
+
+.header-right { display: flex; align-items: center; gap: 1.75rem; }
+
+/* theme picker: bordered icon button + Light / Dark / Auto menu */
+.theme-dropdown { position: relative; display: flex; }
+.icon {
+  width: 16px; height: 16px;
+  fill: none; stroke: currentColor; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  padding: 0.35rem;
+  background: none;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.theme-toggle:hover, .theme-toggle[aria-expanded="true"] { color: var(--fg); background: var(--hover); }
+.theme-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  z-index: 10;
+  min-width: 8.5rem;
+  padding: 0.25rem;
+  list-style: none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.theme-menu li + li { margin-top: 0; }
+.theme-menu button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  background: none;
+  color: var(--fg);
+  border: 0;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+.theme-menu button:hover { background: var(--hover); }
+.theme-menu button[aria-pressed="true"] { font-weight: 700; }
+.theme-menu .check { margin-left: auto; visibility: hidden; }
+.theme-menu button[aria-pressed="true"] .check { visibility: visible; }
+:root:not([data-theme]) .theme-dropdown { display: none; } /* no JS: hide the picker */
+
+.icons { display: flex; gap: 1rem; }
+.icons a { color: var(--muted); display: flex; }
+.icons a:hover { color: var(--fg); }
+.icons svg { width: 18px; height: 18px; }
+
+h1 { font-size: 1.4rem; font-weight: 700; }
+
+section {
+  display: grid;
+  grid-template-columns: var(--label-w) 1fr;
+  margin-bottom: 2.5rem;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+ul { list-style: none; }
+li + li { margin-top: 1.1rem; }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+b { font-weight: 700; }
+
+.date {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+li p { color: var(--muted); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+.links a + a { margin-left: 1rem; }
+
+/* list / prose switch for Work and Research (off = list, on = prose) */
+.view-wrap { display: flex; justify-content: flex-end; margin: -1.5rem 0 1rem; }
+.view-toggle {
+  position: relative;
+  width: 2.2rem;
+  height: 1.2rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--muted) 50%, transparent);
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+.view-toggle::before {
+  content: "";
+  position: absolute;
+  top: 2px; left: 2px;
+  width: calc(1.2rem - 6px);
+  height: calc(1.2rem - 6px);
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+html[data-view="prose"] .view-toggle { background: var(--fg); border-color: var(--fg); }
+html[data-view="prose"] .view-toggle::before { background: var(--bg); transform: translateX(1rem); }
+.view-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .view-toggle, .view-toggle::before { transition: none; }
+}
+
+html[data-view="prose"] .view-list { display: none; }
+html:not([data-view="prose"]) .view-prose { display: none; }
+
+/* header: name + Projects link use the link color */
+h1 a, .nav-link { color: var(--accent); }
+.nav-link[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; }
+
+/* projects page */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.project-card h3 { font-size: 1.05rem; }
+.project-card .tech { color: var(--muted); font-size: 0.9rem; margin: 0 0 0.5rem; }
+.project-card .buttons { margin-top: auto; padding-top: 0.75rem; }
+.button {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.button:hover { background: var(--hover); text-decoration: none; }
+
+@media (max-width: 560px) {
+  main { padding: 3rem 1.25rem; }
+  header { padding-left: 0; }
+  section { grid-template-columns: 1fr; }
+  h2 { margin-bottom: 0.5rem; }
+}
+
+section p + p { margin-top: 1rem; }
