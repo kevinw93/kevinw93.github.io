@@ -22,6 +22,12 @@
   --accent: #2f5fd0;
   --border: #e2e2df;
   --hover: #f1f1ee;
+  --sky: #cfe6f7;
+  --sun: #ffe6a3;
+  --hill-1: #c3e1ab;
+  --hill-2: #a6d28b;
+  --hill-3: #8cc372;
+  --quote: #ffffff;
   --label-w: 7rem;
 }
 
@@ -33,6 +39,12 @@
   --accent: #8aa8ff;
   --border: #2c2c2c;
   --hover: #1c1c1c;
+  --sky: #1d2b47;
+  --sun: #e8e3c8;
+  --hill-1: #2c4630;
+  --hill-2: #253e29;
+  --hill-3: #1f3522;
+  --quote: #e6e6e6;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
@@ -42,6 +54,12 @@
     --accent: #8aa8ff;
     --border: #2c2c2c;
     --hover: #1c1c1c;
+    --sky: #1d2b47;
+    --sun: #e8e3c8;
+    --hill-1: #2c4630;
+    --hill-2: #253e29;
+    --hill-3: #1f3522;
+    --quote: #e6e6e6;
   }
 }
 :root[data-theme="dark"] { color-scheme: dark; }
@@ -170,39 +188,6 @@ a:hover { text-decoration: underline; }
 
 .links a + a { margin-left: 1rem; }
 
-/* list / prose switch for Work and Research (off = list, on = prose) */
-.view-wrap { display: flex; justify-content: flex-end; margin: -1.5rem 0 1rem; }
-.view-toggle {
-  position: relative;
-  width: 2.2rem;
-  height: 1.2rem;
-  padding: 0;
-  border: 1px solid color-mix(in srgb, var(--muted) 50%, transparent);
-  border-radius: 999px;
-  background: none;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
-}
-.view-toggle::before {
-  content: "";
-  position: absolute;
-  top: 2px; left: 2px;
-  width: calc(1.2rem - 6px);
-  height: calc(1.2rem - 6px);
-  border-radius: 50%;
-  background: var(--muted);
-  transition: transform 0.25s ease, background-color 0.25s ease;
-}
-html[data-view="prose"] .view-toggle { background: var(--fg); border-color: var(--fg); }
-html[data-view="prose"] .view-toggle::before { background: var(--bg); transform: translateX(1rem); }
-.view-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) {
-  .view-toggle, .view-toggle::before { transition: none; }
-}
-
-html[data-view="prose"] .view-list { display: none; }
-html:not([data-view="prose"]) .view-prose { display: none; }
-
 /* header: name + Projects link use the link color */
 h1 a, .nav-link { color: var(--accent); }
 .nav-link[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; }
@@ -232,6 +217,163 @@ h1 a, .nav-link { color: var(--accent); }
   font-size: 0.9rem;
 }
 .button:hover { background: var(--hover); text-decoration: none; }
+
+/* expandable work experiences: click the row, body slides open */
+.exps .exp + .exp { margin-top: 0.4rem; }
+.exp-head {
+  display: block;
+  width: calc(100% + 1.2rem);
+  margin: 0 -0.6rem;
+  padding: 0.5rem 0.6rem;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.exp-head:hover { background: var(--hover); }
+/* company logos: just outside the row's right edge, so dates and arrows stay aligned with Research */
+.exp { position: relative; }
+.exp-logo {
+  position: absolute;
+  top: calc(0.5rem + 7px); /* centered on the two-line row header */
+  left: calc(100% + 1.25rem);
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 3px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.exp-logo[src$="aws.png"] { padding: 0; object-fit: cover; } /* the AWS icon has its own grey background */
+/* not enough room beside the column: put the logo inside the row instead */
+@media (max-width: 1000px) {
+  .exp-head:has(.exp-logo) { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; }
+  .exp-logo { position: static; }
+}
+.exp-head:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.exp-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: var(--muted);
+}
+.exp-head:hover .exp-title { color: var(--fg); }
+.chev {
+  width: 22px; height: 22px; flex-shrink: 0;
+  fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  transition: transform 0.3s ease;
+}
+.exp-head[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.exp-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.35s ease, opacity 0.35s ease;
+}
+.exp-body > div { overflow: hidden; }
+.exp-body p { padding-top: 0.75rem; color: var(--fg); }
+section:has(.exps) h2 { padding-top: 0.5rem; } /* line up with the padded rows */
+.exp-body p + p { margin-top: 0; }
+.exp-head[aria-expanded="true"] + .exp-body { grid-template-rows: 1fr; opacity: 1; }
+.exp-body > div > :last-child { padding-bottom: 0.5rem; }
+:root:not([data-theme]) .exp-body { grid-template-rows: 1fr; opacity: 1; } /* no JS: show everything */
+:root:not([data-theme]) .chev { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .exp-body, .chev { transition: none; }
+}
+
+/* pasture scene at the bottom of every page */
+body { min-height: 100vh; display: flex; flex-direction: column; }
+main { flex: 1; width: 100%; }
+.scene { position: relative; display: block; height: 240px; margin-top: -3rem; pointer-events: none; }
+.scene svg { display: block; width: 100%; height: 100%; }
+.scene .sun { fill: var(--sun); }
+.scene .hill-back { fill: var(--hill-1); }
+.scene .hill-mid { fill: var(--hill-2); }
+.scene .hill-front { fill: var(--hill-3); }
+/* Milton, "Lycidas": hidden until you hover the bottom strip of the hills.
+   The text sits under the front hill's peak (x = 458 of the 1440-wide viewBox).
+   The SVG uses "xMidYMax slice", so that point is at min(31.81%, 50% - 242px);
+   max(11rem, ...) keeps it on screen on phones, where the peak is cropped off. */
+.scene-quote {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2.75rem;
+  pointer-events: auto;
+}
+.scene-quote span {
+  position: absolute;
+  top: 50%;
+  left: max(11rem, min(31.81%, calc(50% - 242px)));
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-style: italic;
+  color: var(--quote);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.scene-quote:hover span { opacity: 0.35; }
+@media (prefers-reduced-motion: reduce) { .scene-quote span { transition: none; } }
+
+/* Small Zeus2Q: his head bobs up from behind "System Technology Works" when you hover that row.
+   .peek-window clips him at the top of the text, so he looks like he's behind it. */
+.exp-head { isolation: isolate; } /* keeps Zeus above the row's hover background but behind its text */
+.peek { position: relative; }
+.peek-window {
+  position: absolute;
+  right: 0.9em;
+  bottom: 62%;
+  width: 72px;
+  height: 32px;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+.peek-window img {
+  display: block;
+  width: 72px;
+  transform: translateY(32px);
+  transition: transform 0.45s cubic-bezier(.3, 1.4, .5, 1);
+}
+.exp-head:hover .peek-window img,
+.exp-head:focus-visible .peek-window img { transform: translateY(1px) rotate(-6deg); }
+
+/* Big Zeus2Q: leans out from the left edge of the expanded paragraphs whenever they're open.
+   .robot-window spans the text's height and ends at its left edge, so he's clipped there.
+   It lives inside .exp-body, so he fades in and out with the text. */
+.exp-body { position: relative; }
+.robot-window {
+  position: absolute;
+  top: 0.75rem;
+  bottom: 0;
+  right: calc(100% + 6px); /* small gap before the text */
+  width: 110px;
+  overflow: hidden;
+  pointer-events: none;
+  /* fade him out toward the text instead of a hard edge */
+  -webkit-mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 62%, transparent 100%);
+}
+.robot-window img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  max-width: none;
+  transform: translateX(110px);
+  transform-origin: 60% 30%;
+  transition: transform 0.6s cubic-bezier(.3, 1.3, .5, 1) 0.1s;
+}
+.exp-head[aria-expanded="true"] + .exp-body .robot-window img { transform: translateX(-12px) rotate(-8deg); }
+:root:not([data-theme]) .robot-window img { transform: translateX(-12px) rotate(-8deg); } /* no JS: text is open */
+@media (max-width: 560px) { .robot-window { display: none; } } /* no room left of the text on phones */
+@media (prefers-reduced-motion: reduce) { .peek-window img, .robot-window img { transition: none; } }
 
 @media (max-width: 560px) {
   main { padding: 3rem 1.25rem; }

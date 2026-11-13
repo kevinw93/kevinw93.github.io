@@ -6,9 +6,11 @@
   <title>Kevin Wang</title>
   <meta name="description" content="Kevin Wang — CS + Math at Georgia Tech. Distributed systems, operating systems, and ML.">
   <link rel="preload" href="/fonts/Libron-Regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="/style.css">
+  <!-- Tab icon: sun in a sky, matching the scene at the bottom. script.js swaps it with the theme picker. -->
+  <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/style.css?v=14">
   <script>
-    try { if (localStorage.getItem("view") !== "list") document.documentElement.dataset.view = "prose"; } catch (e) {} // default: more detail
     (function () {
       var t = null;
       try { t = localStorage.getItem("theme"); } catch (e) {}
@@ -81,85 +83,90 @@
       </div>
     </section>
 
-    <div class="view-wrap">
-      <button type="button" class="view-toggle" role="switch" aria-checked="false"
-              aria-label="More Detail" title="More Detail"
-              data-umami-event="toggle-view"></button>
-    </div>
-
     <section>
       <h2>Work</h2>
-      <div>
-        <ul class="view-list">
-          <li>
-            <div class="row"><span><b>Amazon Web Services</b>, Software Development Intern</span><span class="date">Sep - Nov 2026</span></div>
-            <p>Single Host Failure Detection for Journal Stream Router</p>
+      <!-- Click a role to expand it. Each <li class="exp"> is one experience. -->
+      <ul class="exps">
+          <li class="exp">
+            <button type="button" class="exp-head" aria-expanded="false" aria-controls="exp-0">
+              <span class="exp-text">
+                <span class="row"><span><b>Amazon Web Services</b>, Software Development Intern</span><span class="date">Sep - Nov 2026</span></span>
+                <span class="exp-title">Single Host Failure Detection for Journal Stream Router<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
+              <img class="exp-logo" src="/images/logos/aws.png" alt="" width="40" height="40">
+            </button>
+            <div class="exp-body" id="exp-0">
+              <div>
+                <p>This fall, I'm interning on the Journal team at <b>Amazon Web Services</b>. Journal is a fault-tolerant, high performance, durable write-ahead log service at massive scale, handling over 100M transactions per second. Journal is regularly used as a tier-0 building block for other AWS services. For example, Journal enables S3 and DynamoDB to durably record changes before applying them.</p>
+                <p>My project detects and isolates single-host failures in Journal Stream Router (JSR), the fleet that routes clients to the Journal backend. A JSR host with failing hardware can keep accepting connections while serving them poorly, hurting every client routed to it. I built a system that watches each host's kernel logs for signs of hardware failure and quarantines a failing host. A quarantined host stops accepting new connections and gradually drains its existing connections to healthy hosts. To protect fleet capacity, hosts coordinate through a shared lease. Only one host can be quarantined at a time, and only when enough healthy hosts remain to absorb its traffic.</p>
+                <p>I’m approaching the end of my internship, and I’m excited to see the results of my work once it’s productionized! I’ve been able to catch a whole host of errors during beta testing, and I’m hoping my work will reduce the oncall load by catching failing hosts before Journal sees customer impact.</p>
+              </div>
+            </div>
           </li>
-          <li>
-            <div class="row"><span><b>Lockheed Martin</b>, Software Engineering Intern</span><span class="date">Jun - Aug 2026</span></div>
-            <p>Graph Ontology Search Engine</p>
+          <li class="exp">
+            <button type="button" class="exp-head" aria-expanded="false" aria-controls="exp-1">
+              <span class="exp-text">
+                <span class="row"><span><b>Lockheed Martin</b>, Software Engineering Intern</span><span class="date">Jun - Aug 2026</span></span>
+                <span class="exp-title">Graph Ontology Search Engine<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
+              <img class="exp-logo" src="/images/logos/lockheed-martin.png" alt="" width="40" height="40">
+            </button>
+            <div class="exp-body" id="exp-1">
+              <div>
+                <p>Over the summer I was at <b>Lockheed Martin</b>, where I rebuilt the communications org’s search engine, which previously ran on Algolia. The old engine often missed valid results for domain-specific queries, with searches using an acronym, internal program name, or paraphrase routinely failing to surface relevant documents, often with zero results.</p>
+                <p>To fix this, I built a search engine using OpenSearch and AWS Neptune. Using large language models, I extracted entity-relationship-entity triples from 15,000+ internal documents into AWS Neptune, producing a graph of 270K+ nodes and 1.2M+ edges. When a document is indexed, Cypher queries fetch its entities, aliases, and related concepts from the graph and store them on the document’s OpenSearch entry. Related concepts are weighted lower than direct aliases so loose matches don't crowd out exact ones.</p>
+                <p>As a result, a search using a program's full name now finds documents that only use its acronym and also documents containing semantically related content. Compared to the same OpenSearch pipeline without the graph, this raised the top-10 search result relevance (nDCG) by 46%. Because all graph work happens at index time, searches never wait on Neptune. Serving from inside Lockheed's network instead of calling an external service also cut p95 query latency by 40% compared to Algolia.</p>
+              </div>
+            </div>
           </li>
-          <li>
-            <div class="row"><span><b>System Technology Works</b>, Software Engineering Intern</span><span class="date">May - Aug 2025</span></div>
-            <p>Humanoid Robotics</p>
+          <li class="exp">
+            <button type="button" class="exp-head" aria-expanded="false" aria-controls="exp-2">
+              <span class="exp-text">
+                <span class="row"><span><b class="peek">System Technology Works<span class="peek-window" aria-hidden="true"><img src="/images/zeus2q.png" alt=""></span></b>, Software Engineering Intern</span><span class="date">May - Aug 2025</span></span>
+                <span class="exp-title">Humanoid Robotics<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </span>
+              <img class="exp-logo" src="/images/logos/stw.png" alt="" width="40" height="40">
+            </button>
+            <div class="exp-body" id="exp-2">
+              <span class="robot-window" aria-hidden="true"><img src="/images/robot.png" alt="" loading="lazy"></span>
+              <div>
+                <p>Previously, I interned at <b>System Technology Works</b>, which is a local robotics company in Georgia building humanoid robots such as the Zeus2Q. I built software that contributed to the Zeus2Q’s seeing, walking, talking, and overall human interaction capabilities.</p>
+                <p>For vision, I built face tracking that uses OpenCV to detect faces and a PID controller to turn the robot's head so the person stays centered in view. I also built an object detection pipeline that combines YOLO with an Intel RealSense depth camera to locate objects in 3D in real time, so the robot knows where things are around it. For conversation, I used Llama 3 to generate the robot's responses in 10+ languages, with keyword detection to trigger interactions such as playing rock, paper, scissors, shaking hands, or dancing. I also tuned the robot's movements so it could walk and dance while keeping its balance.</p>
+              </div>
+            </div>
           </li>
-        </ul>
-        <!-- FILLER: placeholder prose, rewrite in your own voice -->
-        <div class="view-prose">
-          <p>
-            This fall I'm interning at <b>Amazon Web Services</b> on Journal, the distributed log that
-            S3 and DynamoDB use to durably record writes before they're committed. My
-            project is single-host failure detection for the stream router: noticing when
-            one machine goes bad and quarantining it before it can stall writes for
-            everyone else.
-          </p>
-          <p>
-            Over the summer I was at <b>Lockheed Martin</b>, building a search engine to
-            replace the communications org's Algolia setup. It runs on OpenSearch inside
-            Lockheed's own network, and leans on a knowledge graph built from thousands of
-            internal documents to find results even when a query is worded differently
-            from the page it's looking for.
-          </p>
-          <p>
-            Before that, I spent a summer at <b>System Technology Works</b> teaching a
-            humanoid robot to see, talk, walk, and occasionally dance.
-          </p>
-        </div>
-      </div>
+      </ul>
     </section>
 
     <section>
       <h2>Research</h2>
-      <div>
-        <ul class="view-list">
-          <li>
-            <div class="row"><span><b>Robotarium</b>, Georgia Tech</span><span class="date">2025–26</span></div>
-            <p>Robots that find and follow each other using only an onboard camera. A quantized YOLO model runs in real time on a Raspberry Pi.</p>
+      <!-- FILLER: expanded text is placeholder written from your resume; rewrite in your own voice -->
+      <ul class="exps">
+          <li class="exp">
+            <button type="button" class="exp-head" aria-expanded="false" aria-controls="exp-3">
+              <span class="row"><span><b>Robotarium</b>, Georgia Tech</span><span class="date">2025–26</span></span>
+              <span class="exp-title">Vision-Based Robot Following<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="exp-body" id="exp-3">
+              <div>
+                <p>At the <b>Robotarium</b> at Georgia Tech, I worked on getting the lab's small robots to find and follow each other using nothing but their onboard cameras, with no external tracking system.</p>
+                <p>I trained a lightweight YOLOv5-nano detector on a Roboflow dataset, reaching 0.95 mAP for robot detection, then shrank the model by 65% with INT8 quantization in ONNX Runtime so it runs in real time on a Raspberry Pi. ROS2 nodes written in C++ read frames through libcamera and publish bounding box coordinates, which the robot uses to detect and follow the robot in front of it.</p>
+              </div>
+            </div>
           </li>
-          <li>
-            <div class="row"><span><b>Modern Languages Lab</b>, with Dr. Hongchen Wu</span><span class="date">2025–26</span></div>
-            <p>Co-authored a paper on how well LLMs reason about unfamiliar languages, using 200+ olympiad problems. An outgrowth of competing in NACLO (gold) and at IOL on the US team (honorable mention).</p>
+          <li class="exp">
+            <button type="button" class="exp-head" aria-expanded="false" aria-controls="exp-4">
+              <span class="row"><span><b>Modern Languages Lab</b>, with Dr. Hongchen Wu</span><span class="date">2025–26</span></span>
+              <span class="exp-title">LLM Reasoning on Unfamiliar Languages<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </button>
+            <div class="exp-body" id="exp-4">
+              <div>
+                <p>I got into computational linguistics through linguistics olympiads: puzzles where you work out how a language you've never seen works from just a handful of examples. I won a gold medal at NACLO and went on to compete for the US at the International Linguistics Olympiad, where I received an honorable mention.</p>
+                <p>So at the <b>Modern Languages Lab</b> with Dr. Hongchen Wu, it felt natural to turn those same puzzles on large language models. I co-authored a paper testing how well 8 leading LLMs reason about unfamiliar languages across more than two hundred olympiad problems.</p>
+              </div>
+            </div>
           </li>
-        </ul>
-        <!-- FILLER: placeholder prose, rewrite in your own voice -->
-        <div class="view-prose">
-          <p>
-            At the <b>Robotarium</b> at Georgia Tech, I worked on getting the lab's small
-            robots to find and follow each other using nothing but their onboard cameras,
-            which mostly meant shrinking an object detector until it could run in real
-            time on a Raspberry Pi.
-          </p>
-          <p>
-            I got into computational linguistics through linguistics olympiads: puzzles where
-            you work out how a language you've never seen works from just a handful of examples.
-            I won a gold medal at NACLO and went on to compete for the US at the International
-            Linguistics Olympiad, where I received an honorable mention. So at the
-            <b>Modern Languages Lab</b> with Dr. Hongchen Wu, it felt natural to turn those
-            same puzzles on large language models. I co-authored a paper testing how well
-            LLMs reason about unfamiliar languages across more than two hundred olympiad problems.
-          </p>
-        </div>
-      </div>
+      </ul>
     </section>
 
     <section>
@@ -172,6 +179,25 @@
     </section>
   </main>
 
-  <script src="/script.js"></script>
+  <!-- Decorative pasture scene: hand-drawn with basic SVG shapes. The sky fades to transparent at the top. Colors come from CSS variables (--sky, --sun, etc.). -->
+  <footer class="scene" aria-hidden="true">
+    <svg viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color: var(--sky)" stop-opacity="0"/>
+          <stop offset="0.5" style="stop-color: var(--sky)" stop-opacity="0.35"/>
+          <stop offset="1" style="stop-color: var(--sky)" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="260" fill="url(#sky)"/>
+      <circle class="sun" cx="1060" cy="175" r="62"/>
+      <path class="hill-back" d="M0 180 Q 360 120 720 170 T 1440 160 V260 H0 Z"/>
+      <path class="hill-mid" d="M0 205 Q 320 160 660 198 T 1440 190 V260 H0 Z"/>
+      <path class="hill-front" d="M0 232 Q 420 196 840 226 T 1440 222 V260 H0 Z"/>
+    </svg>
+    <p class="scene-quote"><span>Tomorrow to fresh woods, and pastures new.</span></p>
+  </footer>
+
+  <script src="/script.js?v=14"></script>
 </body>
 </html>

@@ -1,23 +1,4 @@
-// Shared by every page: list / prose switch (home only) and the theme picker.
-(function () {
-  var root = document.documentElement;
-  var btn = document.querySelector(".view-toggle");
-  if (!btn) return; // only the home page has the list / prose switch
-  function sync() {
-    var prose = root.dataset.view === "prose";
-    var label = prose ? "Less Detail" : "More Detail";
-    btn.setAttribute("aria-checked", prose);
-    btn.title = label;
-    btn.setAttribute("aria-label", label);
-  }
-  sync();
-  btn.addEventListener("click", function () {
-    var prose = root.dataset.view !== "prose";
-    if (prose) root.dataset.view = "prose"; else delete root.dataset.view;
-    try { localStorage.setItem("view", prose ? "prose" : "list"); } catch (e) {}
-    sync();
-  });
-})();
+// Shared by every page: theme picker and expandable work / research rows.
 (function () {
   var root = document.documentElement;
   var toggle = document.querySelector(".theme-toggle");
@@ -32,6 +13,10 @@
   }
   function apply(pref) {
     root.dataset.theme = pref === "auto" ? (mq.matches ? "dark" : "light") : pref;
+    // tab icon follows the chosen theme, not just the system setting
+    document.querySelectorAll('link[rel="icon"]').forEach(function (l) {
+      l.href = "/favicon-" + root.dataset.theme + ".svg";
+    });
     toggle.querySelector("use").setAttribute("href", "#icon-" + pref);
     options.forEach(function (o) { o.setAttribute("aria-pressed", o.dataset.themeValue === pref); });
   }
@@ -57,3 +42,10 @@
   });
   mq.addEventListener("change", function () { if (getPref() === "auto") apply("auto"); });
 })();
+
+// Expandable work experiences.
+document.querySelectorAll(".exp-head").forEach(function (head) {
+  head.addEventListener("click", function () {
+    head.setAttribute("aria-expanded", head.getAttribute("aria-expanded") !== "true");
+  });
+});
