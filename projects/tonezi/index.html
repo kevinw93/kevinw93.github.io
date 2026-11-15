@@ -14,7 +14,7 @@
     .tech { color: var(--muted); font-size: 0.9rem; }
     .shot { margin: 1.25rem 0 0; }
     .shot img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; }
-    .shot.narrow img { max-width: 320px; }
+    .shot-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; max-width: 520px; }
     .shot figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
     section ul { padding-left: 1.1rem; }
     section li + li { margin-top: 0.6rem; }
@@ -87,9 +87,12 @@
       <h2>Writing</h2>
       <div>
         <p>The Hanzi page plays a character's audio first and has the learner write it from memory. Characters come from the original research list, HSK 2.0, HSK 3.0, or a chengyu (four-character idiom) list, with an optional HSK level filter. Writing runs on HanziWriter, which checks stroke order as you draw, and every attempt's stroke data is saved for research. Pinyin, a definition, and an example sentence stay hidden until you ask for them.</p>
-        <figure class="shot narrow">
-          <img src="/images/projects/tonezi-handwriting.jpg" alt="The character 牧 partly written on ToneZi's HanziWriter canvas, 6 of 8 strokes complete" loading="lazy">
-          <figcaption>Writing 牧 (mù, "to herd") stroke by stroke: 6 of 8 strokes accepted so far.</figcaption>
+        <figure class="shot">
+          <div class="shot-pair">
+            <img src="/images/projects/tonezi-handwriting-1.jpg" alt="The character 牧 on ToneZi's writing canvas with 3 of 8 strokes written" loading="lazy">
+            <img src="/images/projects/tonezi-handwriting-2.jpg" alt="The character 牧 on ToneZi's writing canvas with 6 of 8 strokes written" loading="lazy">
+          </div>
+          <figcaption>Writing 牧 (mù, "to herd") stroke by stroke: 3 of 8 strokes accepted (left), then 6 of 8 (right).</figcaption>
         </figure>
       </div>
     </section>
