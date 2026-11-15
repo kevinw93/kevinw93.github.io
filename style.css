@@ -66,6 +66,12 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Overscroll ("rubber band") areas show the root element's background, not the body's.
+   script.js adds .overscroll-bottom near the bottom of the page so dragging past the hills
+   reveals more green instead of the page color. */
+html { background-color: var(--bg); }
+html.overscroll-bottom { background-color: var(--hill-3); }
+
 body {
   background: var(--bg);
   color: var(--fg);

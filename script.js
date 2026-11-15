@@ -49,3 +49,25 @@ document.querySelectorAll(".exp-head").forEach(function (head) {
     head.setAttribute("aria-expanded", head.getAttribute("aria-expanded") !== "true");
   });
 });
+
+// Show the hill green, not the page color, when overscrolling past the bottom of the page.
+(function () {
+  var root = document.documentElement;
+  function setBottom(on) { root.classList.toggle("overscroll-bottom", on); }
+  function update() {
+    var max = root.scrollHeight - innerHeight;
+    if (max > 0) setBottom(scrollY > max / 2);
+  }
+  // Pages too short to scroll: decide by which way the user is pulling.
+  addEventListener("wheel", function (e) {
+    if (root.scrollHeight - innerHeight <= 0 && e.deltaY) setBottom(e.deltaY > 0);
+  }, { passive: true });
+  var touchY = null;
+  addEventListener("touchstart", function (e) { touchY = e.touches[0].clientY; }, { passive: true });
+  addEventListener("touchmove", function (e) {
+    if (touchY !== null && root.scrollHeight - innerHeight <= 0) setBottom(e.touches[0].clientY < touchY);
+  }, { passive: true });
+  addEventListener("scroll", update, { passive: true });
+  addEventListener("resize", update);
+  update();
+})();
