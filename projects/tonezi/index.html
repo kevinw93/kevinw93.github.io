@@ -14,7 +14,11 @@
     .tech { color: var(--muted); font-size: 0.9rem; }
     .shot { margin: 1.25rem 0 0; }
     .shot img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; }
-    .shot-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; max-width: 520px; }
+    /* One panel holding both handwriting images, like the single pitch-plot image */
+    .shot-pair { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0.25rem;
+                 max-width: 560px; padding: 0.5rem; background: #f5f5f5; border: 1px solid var(--border); border-radius: 8px; }
+    .shot-pair img { border: none; border-radius: 0; }
+    .shot-pair .arrow { width: 1.75rem; height: 1.75rem; fill: none; stroke: #8a8a8a; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .shot figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
     section ul { padding-left: 1.1rem; }
     section li + li { margin-top: 0.6rem; }
@@ -90,6 +94,7 @@
         <figure class="shot">
           <div class="shot-pair">
             <img src="/images/projects/tonezi-handwriting-1.jpg" alt="The character 牧 on ToneZi's writing canvas with 3 of 8 strokes written" loading="lazy">
+            <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
             <img src="/images/projects/tonezi-handwriting-2.jpg" alt="The character 牧 on ToneZi's writing canvas with 6 of 8 strokes written" loading="lazy">
           </div>
           <figcaption>Writing 牧 (mù, "to herd") stroke by stroke: 3 of 8 strokes accepted (left), then 6 of 8 (right).</figcaption>
