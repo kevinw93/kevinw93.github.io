@@ -14,6 +14,7 @@
     .tech { color: var(--muted); font-size: 0.9rem; }
     .shot { margin: 1.25rem 0 0; }
     .shot img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; }
+    .shot.narrow img { max-width: 320px; }
     .shot figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; }
     section ul { padding-left: 1.1rem; }
     section li + li { margin-top: 0.6rem; }
@@ -78,7 +79,7 @@
       <div>
         <p class="tech">Python, Flask, PostgreSQL, JavaScript, D3.js, Praat, Docker</p>
         <p>ToneZi is a Mandarin learning web app built by a research team at Georgia Tech. Dr. Wu Hongchen leads it, with students Reed Jorgensen, Jim Fredeman, Mark Pindur, and me. It targets two skills most learning apps skip: <b>writing a character from memory after hearing it</b>, and <b>producing the right tone contour when speaking</b>.</p>
-        <p>The project grew out of a survey on character amnesia (提笔忘字, forgetting how to write characters you can read) that was presented at UN Chinese Language Learning Day 2024. ToneZi was deployed on DigitalOcean and used by two Chinese courses at Georgia Tech.</p>
+        <p>The project grew out of the lab's research on character amnesia (提笔忘字, forgetting how to write characters you can read), presented at UN Chinese Language Learning Day 2024. ToneZi was deployed on DigitalOcean and used by two Chinese courses at Georgia Tech.</p>
       </div>
     </section>
 
@@ -86,9 +87,9 @@
       <h2>Writing</h2>
       <div>
         <p>The Hanzi page plays a character's audio first and has the learner write it from memory. Characters come from the original research list, HSK 2.0, HSK 3.0, or a chengyu (four-character idiom) list, with an optional HSK level filter. Writing runs on HanziWriter, which checks stroke order as you draw, and every attempt's stroke data is saved for research. Pinyin, a definition, and an example sentence stay hidden until you ask for them.</p>
-        <figure class="shot">
-          <img src="/images/projects/tonezi-hanzi.jpg" alt="ToneZi Hanzi page with a generated character, 背, above the writing canvas" loading="lazy">
-          <figcaption>The Hanzi page with the character revealed above the writing canvas.</figcaption>
+        <figure class="shot narrow">
+          <img src="/images/projects/tonezi-handwriting.jpg" alt="The character 牧 partly written on ToneZi's HanziWriter canvas, 6 of 8 strokes complete" loading="lazy">
+          <figcaption>Writing 牧 (mù, "to herd") stroke by stroke: 6 of 8 strokes accepted so far.</figcaption>
         </figure>
       </div>
     </section>
@@ -99,27 +100,17 @@
         <p>On the Pronunciation page, a learner types a phrase (or speaks freely) and records it in the browser. The server pulls the pitch curve from the recording and from a reference recording using Praat (through Parselmouth), tuned for the Mandarin pitch range of 75–500 Hz with smoothing to reduce octave errors. The two curves are plotted together in D3.js so the learner can see where their tones go wrong.</p>
         <p>Reference audio comes from text-to-speech: Fish Audio, with Google TTS as an alternative. With voice cloning turned on, learners can record voice samples and hear the reference in a clone of <b>their own voice</b>, so the only difference between the two curves is the tone, not the speaker.</p>
         <figure class="shot">
-          <img src="/images/projects/tonezi-pronunciation.jpg" alt="ToneZi Mandarin Pronunciation Practice page with practice text input and recording settings" loading="lazy">
-          <figcaption>Pronunciation practice: enter text, record, and compare pitch contours.</figcaption>
+          <img src="/images/projects/tonezi-pitch.jpg" alt="Two D3 pitch plots for 今天天气很好: the learner's intonation pattern in blue above the standard pattern in red" loading="lazy">
+          <figcaption>Pitch contours for 今天天气很好 ("the weather is nice today"): the recording on top, the reference below. Both were extracted with Praat and drawn by ToneZi's D3 plots, from demo audio rather than a real learner's recording.</figcaption>
         </figure>
       </div>
     </section>
 
-    <section>
-      <h2>Research</h2>
-      <div>
-        <p>ToneZi doubles as a data-collection platform for the lab. A four-part survey collects a learner's background, 15 writing exercises, 10 recorded phrases, and feedback on the site, all saved to PostgreSQL under one survey session. The site has a full Chinese/English language toggle, accounts, a cookie consent flow, and a privacy page.</p>
-        <figure class="shot">
-          <img src="/images/projects/tonezi-survey.jpg" alt="ToneZi survey welcome page listing the four survey parts" loading="lazy">
-          <figcaption>The four-part research survey.</figcaption>
-        </figure>
-      </div>
-    </section>
 
     <section>
       <h2>Architecture</h2>
       <div>
-        <p>The back end is a Flask app split into blueprints (writing, pronunciation, voice recording, voice cloning, survey, accounts, feedback) on top of PostgreSQL, using a connection pool with retry and backoff. Recordings go through a hybrid audio cache: a file-based session cache for fast reads, written to the database in parallel. Slow or periodic work runs on a priority task queue with a memory-capped worker pool, so it never blocks a request on the small DigitalOcean server. Everything ships as a Docker image.</p>
+        <p>The back end is a Flask app split into blueprints (writing, pronunciation, voice recording, voice cloning, accounts, feedback) on top of PostgreSQL, using a connection pool with retry and backoff. Recordings go through a hybrid audio cache: a file-based session cache for fast reads, written to the database in parallel. Slow or periodic work runs on a priority task queue with a memory-capped worker pool, so it never blocks a request on the small DigitalOcean server. Everything ships as a Docker image. The site also has a Chinese/English language toggle, accounts, a cookie consent flow, and a privacy page.</p>
       </div>
     </section>
 
@@ -129,7 +120,6 @@
         <ul>
           <li><b>Voice cloning.</b> I integrated Fish Audio and then ElevenLabs voice cloning. The ElevenLabs plan allows only 10 voices, so I tracked every clone in the database and reused a returning learner's voice. When the slots filled up, the least recently used voices were evicted down to 8. A background job deletes clones older than an hour every 15 minutes, so slots free up without anyone cleaning them by hand.</li>
           <li><b>Audio storage.</b> I built the database layer that stores learner recordings and their metadata for research.</li>
-          <li><b>Survey.</b> I worked on the survey pages, mainly the writing and pronunciation sections (parts 2 and 3).</li>
           <li><b>Privacy and UI.</b> I added the cookie consent flow (stored in the database), the privacy page, error notifications, and UI work across the pronunciation, writing, and recording pages.</li>
         </ul>
       </div>
