@@ -9,7 +9,7 @@
   <!-- Tab icon: sun in a sky, matching the scene at the bottom. script.js swaps it with the theme picker. -->
   <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)">
   <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/style.css?v=14">
+  <link rel="stylesheet" href="/style.css?v=15">
   <script>
     (function () {
       var t = null;
@@ -77,6 +77,18 @@
             <p class="buttons"><a class="button" href="https://github.com/kevinw93/kvstore">GitHub</a></p>
           </article>
           <article class="project-card">
+            <h3>LSM Storage Engine</h3>
+            <p class="tech">C++20</p>
+            <p>An LSM-tree key-value engine with a write-ahead log, lock-free skiplist memtable, SSTables with Bloom filters, leveled compaction, and snapshots. Standard library only.</p>
+            <p class="buttons"><a class="button" href="https://github.com/kevinw93/lsm-database">GitHub</a></p>
+          </article>
+          <article class="project-card">
+            <h3>QBuzzer</h3>
+            <p class="tech">Go, TypeScript, React, PostgreSQL</p>
+            <p>A live quiz bowl buzzer: the moderator reads over voice chat, players buzz in the browser, and the server corrects for network latency to decide who was first.</p>
+            <p class="buttons"><a class="button" href="https://github.com/kevinw93/QBuzzer">GitHub</a></p>
+          </article>
+          <article class="project-card">
             <h3>Poem Typesetter</h3>
             <p class="tech">JavaScript, HTML, CSS</p>
             <p>Typeset poetry in the browser with per-line fonts, sizes, and alignment, then export high-resolution PNGs or JPEGs.</p>
@@ -135,9 +147,8 @@
       <path class="hill-mid" d="M0 205 Q 320 160 660 198 T 1440 190 V260 H0 Z"/>
       <path class="hill-front" d="M0 232 Q 420 196 840 226 T 1440 222 V260 H0 Z"/>
     </svg>
-    <p class="scene-quote"><span>Tomorrow to fresh woods, and pastures new.</span></p>
   </footer>
 
-  <script src="/script.js?v=14"></script>
+  <script src="/script.js?v=15"></script>
 </body>
 </html>

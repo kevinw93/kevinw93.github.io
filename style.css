@@ -27,7 +27,6 @@
   --hill-1: #c3e1ab;
   --hill-2: #a6d28b;
   --hill-3: #8cc372;
-  --quote: #ffffff;
   --label-w: 7rem;
 }
 
@@ -44,7 +43,6 @@
   --hill-1: #2c4630;
   --hill-2: #253e29;
   --hill-3: #1f3522;
-  --quote: #e6e6e6;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
@@ -59,7 +57,6 @@
     --hill-1: #2c4630;
     --hill-2: #253e29;
     --hill-3: #1f3522;
-    --quote: #e6e6e6;
   }
 }
 :root[data-theme="dark"] { color-scheme: dark; }
@@ -297,35 +294,12 @@ section:has(.exps) h2 { padding-top: 0.5rem; } /* line up with the padded rows *
 /* pasture scene at the bottom of every page */
 body { min-height: 100vh; display: flex; flex-direction: column; }
 main { flex: 1; width: 100%; }
-.scene { position: relative; display: block; height: 240px; margin-top: -3rem; pointer-events: none; }
+.scene { display: block; height: 240px; margin-top: -3rem; pointer-events: none; }
 .scene svg { display: block; width: 100%; height: 100%; }
 .scene .sun { fill: var(--sun); }
 .scene .hill-back { fill: var(--hill-1); }
 .scene .hill-mid { fill: var(--hill-2); }
 .scene .hill-front { fill: var(--hill-3); }
-/* Milton, "Lycidas": hidden until you hover the bottom strip of the hills.
-   The text sits under the front hill's peak (x = 458 of the 1440-wide viewBox).
-   The SVG uses "xMidYMax slice", so that point is at min(31.81%, 50% - 242px);
-   max(11rem, ...) keeps it on screen on phones, where the peak is cropped off. */
-.scene-quote {
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 2.75rem;
-  pointer-events: auto;
-}
-.scene-quote span {
-  position: absolute;
-  top: 50%;
-  left: max(11rem, min(31.81%, calc(50% - 242px)));
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-  font-style: italic;
-  color: var(--quote);
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-.scene-quote:hover span { opacity: 0.35; }
-@media (prefers-reduced-motion: reduce) { .scene-quote span { transition: none; } }
 
 /* Small Zeus2Q: his head bobs up from behind "System Technology Works" when you hover that row.
    .peek-window clips him at the top of the text, so he looks like he's behind it. */

@@ -9,7 +9,7 @@
   <!-- Tab icon: sun in a sky, matching the scene at the bottom. script.js swaps it with the theme picker. -->
   <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)">
   <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/style.css?v=14">
+  <link rel="stylesheet" href="/style.css?v=15">
   <script>
     (function () {
       var t = null;
@@ -140,17 +140,17 @@
 
     <section>
       <h2>Research</h2>
-      <!-- FILLER: expanded text is placeholder written from your resume; rewrite in your own voice -->
+      <!-- FILLER: the Modern Languages Lab text is still placeholder; Robotarium is final -->
       <ul class="exps">
           <li class="exp">
             <button type="button" class="exp-head" aria-expanded="false" aria-controls="exp-3">
               <span class="row"><span><b>Robotarium</b>, Georgia Tech</span><span class="date">2025–26</span></span>
-              <span class="exp-title">Vision-Based Robot Following<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              <span class="exp-title">Computer Vision for Robotics<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
             </button>
             <div class="exp-body" id="exp-3">
               <div>
                 <p>At the <b>Robotarium</b> at Georgia Tech, I worked on getting the lab's small robots to find and follow each other using nothing but their onboard cameras, with no external tracking system.</p>
-                <p>I trained a lightweight YOLOv5-nano detector on a Roboflow dataset, reaching 0.95 mAP for robot detection, then shrank the model by 65% with INT8 quantization in ONNX Runtime so it runs in real time on a Raspberry Pi. ROS2 nodes written in C++ read frames through libcamera and publish bounding box coordinates, which the robot uses to detect and follow the robot in front of it.</p>
+                <p>I trained a lightweight YOLOv5-nano detector on a custom Roboflow dataset reaching 0.95 mAP for robot detection, then shrank the model by 65% with INT8 quantization in ONNX Runtime so it was small enough to run in real time on a Raspberry Pi. ROS2 nodes written in C++ read frames through libcamera and publish bounding box coordinates, which the robot used to detect and follow the robot in front of it.</p>
               </div>
             </div>
           </li>
@@ -195,9 +195,8 @@
       <path class="hill-mid" d="M0 205 Q 320 160 660 198 T 1440 190 V260 H0 Z"/>
       <path class="hill-front" d="M0 232 Q 420 196 840 226 T 1440 222 V260 H0 Z"/>
     </svg>
-    <p class="scene-quote"><span>Tomorrow to fresh woods, and pastures new.</span></p>
   </footer>
 
-  <script src="/script.js?v=14"></script>
+  <script src="/script.js?v=15"></script>
 </body>
 </html>
