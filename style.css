@@ -195,23 +195,7 @@ a:hover { text-decoration: underline; }
 h1 a, .nav-link { color: var(--accent); }
 .nav-link[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; }
 
-/* projects page */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-.project-card {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-.project-card h3 { font-size: 1.05rem; }
-.project-card .tech { color: var(--muted); font-size: 0.9rem; margin: 0 0 0.5rem; }
-.project-card .buttons { margin-top: auto; padding-top: 0.75rem; }
+/* projects page: same expandable rows as Work, with link buttons always visible */
 .button {
   display: inline-block;
   padding: 0.2rem 0.75rem;
@@ -283,7 +267,8 @@ h1 a, .nav-link { color: var(--accent); }
 .exp-body p { padding-top: 0.75rem; color: var(--fg); }
 section:has(.exps) h2 { padding-top: 0.5rem; } /* line up with the padded rows */
 .exp-body p + p { margin-top: 0; }
-.exp-head[aria-expanded="true"] + .exp-body { grid-template-rows: 1fr; opacity: 1; }
+.exp-head[aria-expanded="true"] + .exp-body,
+.proj-head:has(.exp-head[aria-expanded="true"]) + .exp-body { grid-template-rows: 1fr; opacity: 1; }
 .exp-body > div > :last-child { padding-bottom: 0.5rem; }
 :root:not([data-theme]) .exp-body { grid-template-rows: 1fr; opacity: 1; } /* no JS: show everything */
 :root:not([data-theme]) .chev { display: none; }
@@ -355,9 +340,28 @@ main { flex: 1; width: 100%; }
 @media (max-width: 560px) { .robot-window { display: none; } } /* no room left of the text on phones */
 @media (prefers-reduced-motion: reduce) { .peek-window img, .robot-window img { transition: none; } }
 
+/* project rows: the toggle button fills the whole header; the links sit on top of its second line */
+/* intro line above the Projects section, lined up with the content column */
+.page-intro { padding-left: var(--label-w); margin-bottom: 1.5rem; }
+.gh-link { display: inline-flex; align-items: center; gap: 0.3em; }
+.gh-link svg { width: 0.95em; height: 0.95em; }
+.proj-head { display: grid; }
+.proj-head > * { grid-area: 1 / 1; }
+.proj .exp-title { min-height: 2rem; }
+.proj-links {
+  align-self: end;
+  display: flex;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  z-index: 1;
+  pointer-events: none; /* clicks between buttons still toggle the row */
+}
+.proj-links a { pointer-events: auto; background: var(--bg); }
+.proj-links a:hover { background: var(--hover); }
+
 @media (max-width: 560px) {
   main { padding: 3rem 1.25rem; }
-  header { padding-left: 0; }
+  header, .page-intro { padding-left: 0; }
   section { grid-template-columns: 1fr; }
   h2 { margin-bottom: 0.5rem; }
 }

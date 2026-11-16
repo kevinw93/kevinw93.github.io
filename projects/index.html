@@ -9,7 +9,7 @@
   <!-- Tab icon: sun in a sky, matching the scene at the bottom. script.js swaps it with the theme picker. -->
   <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)">
   <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="/style.css?v=15">
+  <link rel="stylesheet" href="/style.css?v=17">
   <script>
     (function () {
       var t = null;
@@ -64,60 +64,126 @@
       </div>
     </header>
 
+    <p class="page-intro">Check out more at <a class="gh-link" href="https://github.com/kevinw93" target="_blank" rel="noopener" data-umami-event="github">my GitHub<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>!</p>
+
     <section>
       <h2>Projects</h2>
       <div>
-        <p>More on <a href="https://github.com/kevinw93">my GitHub</a>.</p>
-        <!-- To add a project, copy one <article> block. Leave out the buttons line if there's no public repo. -->
-        <div class="project-grid">
-          <article class="project-card">
-            <h3>kvstore</h3>
-            <p class="tech">Go</p>
-            <p>A Dynamo-style key-value store with consistent hashing, quorum replication, Lamport timestamps, and read repair over a custom TCP protocol. Standard library only.</p>
-            <p class="buttons"><a class="button" href="https://github.com/kevinw93/kvstore">GitHub</a></p>
-          </article>
-          <article class="project-card">
-            <h3>LSM Storage Engine</h3>
-            <p class="tech">C++20</p>
-            <p>An LSM-tree key-value engine with a write-ahead log, lock-free skiplist memtable, SSTables with Bloom filters, leveled compaction, and snapshots. Standard library only.</p>
-            <p class="buttons"><a class="button" href="https://github.com/kevinw93/lsm-database">GitHub</a></p>
-          </article>
-          <article class="project-card">
-            <h3>QBuzzer</h3>
-            <p class="tech">Go, TypeScript, React, PostgreSQL</p>
-            <p>A live quiz bowl buzzer: the moderator reads over voice chat, players buzz in the browser, and the server corrects for network latency to decide who was first.</p>
-            <p class="buttons"><a class="button" href="https://github.com/kevinw93/QBuzzer">GitHub</a></p>
-          </article>
-          <article class="project-card">
-            <h3>Poem Typesetter</h3>
-            <p class="tech">JavaScript, HTML, CSS</p>
-            <p>Typeset poetry in the browser with per-line fonts, sizes, and alignment, then export high-resolution PNGs or JPEGs.</p>
-            <p class="buttons"><a class="button" href="https://github.com/kevinw93/poem-typesetter">GitHub</a></p>
-          </article>
-          <article class="project-card">
-            <h3>AI-Generated Image Detection</h3>
-            <p class="tech">Python, DINO, ResNet</p>
-            <p>Telling real images from AI-generated ones with DINO embeddings, classical classifiers, and fine-tuned ResNets, tested against compression, blur, and noise.</p>
-            <p class="buttons"><a class="button" href="https://github.com/kevinw93/ML4641">GitHub</a></p>
-          </article>
-          <article class="project-card">
-            <h3>Berlin Transit Simulation</h3>
-            <p class="tech">Java, Swing</p>
-            <p>A discrete-event simulation of a U-Bahn, S-Bahn, tram, and bus network, with passenger exchange, vehicle capacity, and hazards that delay routes.</p>
-            <p class="buttons"><a class="button" href="https://github.com/kevinw93/Berlin-Public-Transport-Simulation">GitHub</a></p>
-          </article>
-          <article class="project-card">
-            <h3>ToneZi</h3>
-            <p class="tech">Python, Flask, PostgreSQL, JavaScript, Praat</p>
-            <p>Pronunciation and writing practice for Chinese learners, used by two Chinese classes at Georgia Tech.</p>
-            <p class="buttons"><a class="button" href="/projects/tonezi/">Write-up</a></p>
-          </article>
-          <article class="project-card">
-            <h3>xv6 Kernel</h3>
-            <p class="tech">C, xv6, Linux</p>
-            <p>Copy-on-write, lazy allocation, a threading library, and a CFS scheduler (17% faster on benchmarks).</p>
-          </article>
-        </div>
+        <!-- To add a project, copy one <li class="exp proj"> block. Links go in .proj-links and stay visible when collapsed. -->
+        <ul class="exps">
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-2">
+                <span class="row"><span><b>QBuzzer</b></span><span class="date">Go, TypeScript, React, PostgreSQL</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"><a class="button" href="https://qbuzzer-kevinw93.fly.dev/" data-umami-event="qbuzzer-visit">Visit</a><a class="button" href="https://github.com/kevinw93/QBuzzer">GitHub</a></span>
+            </div>
+            <div class="exp-body" id="proj-2">
+              <div>
+                <p>A live quiz bowl buzzer: the moderator reads over voice chat, players buzz in the browser, and the server corrects for network latency to decide who was first.</p>
+              </div>
+            </div>
+          </li>
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-1">
+                <span class="row"><span><b>LSM Storage Engine</b></span><span class="date">C++</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"><a class="button" href="https://github.com/kevinw93/lsm-database">GitHub</a></span>
+            </div>
+            <div class="exp-body" id="proj-1">
+              <div>
+                <p>An LSM-tree key-value engine with a write-ahead log, lock-free skiplist memtable, SSTables with Bloom filters, leveled compaction, and snapshots. Standard library only.</p>
+              </div>
+            </div>
+          </li>
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-6">
+                <span class="row"><span><b>ToneZi</b></span><span class="date">Python, Flask, PostgreSQL, JavaScript, Praat</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"><a class="button" href="/projects/tonezi/">Write-up</a></span>
+            </div>
+            <div class="exp-body" id="proj-6">
+              <div>
+                <p>Pronunciation and writing practice for Chinese learners, used by two Chinese classes at Georgia Tech.</p>
+              </div>
+            </div>
+          </li>
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-4">
+                <span class="row"><span><b>AI-Generated Image Detection</b></span><span class="date">Python, DINO, ResNet</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"><a class="button" href="https://github.com/kevinw93/ML4641">GitHub</a></span>
+            </div>
+            <div class="exp-body" id="proj-4">
+              <div>
+                <p>Telling real images from AI-generated ones with DINO embeddings, classical classifiers, and fine-tuned ResNets, tested against compression, blur, and noise.</p>
+              </div>
+            </div>
+          </li>
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-3">
+                <span class="row"><span><b>Poem Typesetter</b></span><span class="date">JavaScript, HTML, CSS</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"><a class="button" href="/projects/poem-typesetter/" data-umami-event="poem-typesetter-open">Visit</a><a class="button" href="https://github.com/kevinw93/poem-typesetter">GitHub</a></span>
+            </div>
+            <div class="exp-body" id="proj-3">
+              <div>
+                <p>Typeset poetry in the browser with per-line fonts, sizes, and alignment, then export high-resolution PNGs or JPEGs.</p>
+              </div>
+            </div>
+          </li>
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-0">
+                <span class="row"><span><b>kvstore</b></span><span class="date">Go</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"><a class="button" href="https://github.com/kevinw93/kvstore">GitHub</a></span>
+            </div>
+            <div class="exp-body" id="proj-0">
+              <div>
+                <p>A Dynamo-style key-value store with consistent hashing, quorum replication, Lamport timestamps, and read repair over a custom TCP protocol. Standard library only.</p>
+              </div>
+            </div>
+          </li>
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-5">
+                <span class="row"><span><b>Berlin Transit Simulation</b></span><span class="date">Java, Swing</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"><a class="button" href="https://github.com/kevinw93/Berlin-Public-Transport-Simulation">GitHub</a></span>
+            </div>
+            <div class="exp-body" id="proj-5">
+              <div>
+                <p>A discrete-event simulation of a U-Bahn, S-Bahn, tram, and bus network, with passenger exchange, vehicle capacity, and hazards that delay routes.</p>
+              </div>
+            </div>
+          </li>
+          <li class="exp proj">
+            <div class="proj-head">
+              <button type="button" class="exp-head" aria-expanded="false" aria-controls="proj-7">
+                <span class="row"><span><b>xv6 Kernel</b></span><span class="date">C, xv6, Linux</span></span>
+                <span class="exp-title"><span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+              </button>
+              <span class="proj-links"></span>
+            </div>
+            <div class="exp-body" id="proj-7">
+              <div>
+                <p>Copy-on-write, lazy allocation, a threading library, and a CFS scheduler (17% faster on benchmarks).</p>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -149,6 +215,6 @@
     </svg>
   </footer>
 
-  <script src="/script.js?v=15"></script>
+  <script src="/script.js?v=17"></script>
 </body>
 </html>
