@@ -44,9 +44,14 @@
 })();
 
 // Expandable work experiences.
+// Opening an entry sends an Umami event named "expand-<entry>", e.g. "expand-amazon-web-services".
+function slug(text) { return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40); }
 document.querySelectorAll(".exp-head").forEach(function (head) {
   head.addEventListener("click", function () {
-    head.setAttribute("aria-expanded", head.getAttribute("aria-expanded") !== "true");
+    var open = head.getAttribute("aria-expanded") !== "true";
+    head.setAttribute("aria-expanded", open);
+    var name = head.querySelector("b");
+    if (open && name && window.umami) umami.track("expand-" + slug(name.textContent));
   });
 });
 
